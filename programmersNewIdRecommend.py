@@ -36,7 +36,7 @@ def solution(new_id):
 
     for i in range(97,123):
         validation.append(i)
-        
+
     i = 0
     while i < len(new_id):
         if(ord(new_id[i]) not in validation):
@@ -75,9 +75,15 @@ def solution(new_id):
     if (len(new_id) >= 16):
         while len(new_id) > 15:
             new_id.pop()
-
     if (new_id[len(new_id) - 1] == '.'):
         del new_id[len(new_id) - 1]
+
+    # 6단계 아래와 같이 하는게 더 간결
+    # if len(answer) > 15:
+    #   answer = answer[:15]
+    #   if answer[-1] == '.':
+    #       answer = answer[:-1]
+
 
     # 7단계 new_id의 길이가 2자 이하라면, new_id의 마지막 문자를 new_id의 길이가 3이 될 때까지 반복해서 끝에 붙입니다.
     if(len(new_id) <= 2):
