@@ -1,3 +1,5 @@
+# 백준 7562 나이트
+
 from collections import deque
 
 dx = [1,2,2,1,-1,-2,-2,-1]

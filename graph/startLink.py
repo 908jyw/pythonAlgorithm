@@ -1,3 +1,6 @@
+# 백준 5014 스타트링크
+
+
 from collections import deque
 
 # 전체F층 목적지G층 지금있는곳S층 U, D
