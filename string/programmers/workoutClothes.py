@@ -2,25 +2,6 @@ n = 5
 lost = 	[5,4,2]
 reserve = [2,4]
 
-
-
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
 def solution(n, lost, reserve):
     answer = 0
 
