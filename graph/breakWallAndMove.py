@@ -4,7 +4,8 @@ from collections import deque
 N, M = list(map(int,input().split()))
 
 board = [list(map(int,input())) for _ in range(N)]
-visited = [[0]*M for _ in range(N)]
+visited = [[[0]*2 for _ in range(M)] for _ in range(N)]
+
 
 dy = [0,1,0,-1]
 dx = [1,0,-1,0]
@@ -14,68 +15,39 @@ def bfs():
     q = deque()
     y = 0
     x = 0
+    w = 0
     d = 1
-    q.append([y,x,d])
+    q.append([y,x,w,d])
 
     while q:
-        cy,cx,cd = q.popleft()
-        visited[cy][cx] = 1
-        if(cy == N-1 and cx == M-1):
-            global result
-            if(cd < result):
-                result = cd
-            break
+        cy,cx,w,d = q.popleft()
 
+        visited[cy][cx][w] = d
         for i in range(4):
             ny = cy + dy[i]
             nx = cx + dx[i]
 
-            if(0<=ny<N and 0<=nx<M and visited[ny][nx] == 0):
-                if(board[ny][nx] == 0):
-                    q.append([ny,nx,cd+1])
+            if(ny<0 or ny>=N or nx<0 or nx>=M):
+                continue
 
-for i in range(N):
-    for j in range(M):
-        if(board[i][j] == 1):
-            board[i][j] = 0
-            bfs()
-            board[i][j] = 1
+            if(board[ny][nx] == 0 and visited[ny][nx][w] == 0):
+                    q.append([ny, nx, w, d + 1])
+            if(board[ny][nx] == 1 and visited[ny][nx][w] == 0):
+                if(w==0):
+                    w = 1
+                    q.append([ny, nx, w, d + 1])
+                if(w==1):
+                    continue
+
+
 
 bfs()
-if (result == 10**6):
+
+if(visited[N-1][M-1][0] == 0 and visited[N-1][M-1][1] != 0):
+    print(visited[N-1][M-1][1])
+if (visited[N - 1][M - 1][0] != 0 and visited[N - 1][M - 1][1] == 0):
+    print(visited[N - 1][M - 1][0])
+if(visited[N-1][M-1][0] == 0 and visited[N-1][M-1][1] == 0):
     print(-1)
-else:
-    print(result)
-
-
-
-#
-# result = 10**6
-# def dfs(y,x,breakYN, cnt):
-#
-#     cy = y
-#     cx = x
-#     cnt += 1
-#
-#     visited[cy][cx] = 1
-#
-#     if(cy == N-1 and cx == M-1):
-#         global result
-#         if(cnt < result):
-#             result = cnt
-#
-#     for i in range(4):
-#         ny = cy + dy[i]
-#         nx = cx + dx[i]
-#
-#         if(0<=ny<N and 0<=nx<M and visited[ny][nx] == 0):
-#             if(board[ny][nx] == 0):
-#                 dfs(ny,nx,breakYN,cnt)
-#             elif(board[ny][nx] == 1 and breakYN == False):
-#                 dfs(ny, nx, True, cnt)
-#                 visited[ny][nx] = 0
-#
-# dfs(0,0,False,0)
-#
-#
-# print(result)
+if(visited[N-1][M-1][0] != 0 and visited[N-1][M-1][1] != 0):
+    print(min(visited[N-1][M-1][0],visited[N-1][M-1][1]))
