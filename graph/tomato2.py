@@ -7,11 +7,10 @@ M, N, H = list(map(int,input().split()))
 
 dx = [0,0,-1,1,0,0]
 dy = [0,0,0,0,1,-1]
-dz = [-1,-1,0,0,0,0]
+dz = [-1,1,0,0,0,0]
 
 
 board = []
-# visited = [[[0]*M for _ in range(N)] for _ in range(H)]
 
 for k in range(H):
     a = []
@@ -40,7 +39,11 @@ def bfs(q):
                 visited[nz][ny][nx] = visited[z][y][x] + 1
                 if(max_num<visited[nz][ny][nx]):
                     max_num = visited[nz][ny][nx]
-
+        # print('---')
+        # for i in range(H):
+        #     print('i = ' , i)
+        #     for j in range(N):
+        #         print(visited[i][j])
 
 
 q = deque()
@@ -55,6 +58,8 @@ bfs(q)
 chk = False
 
 for k in visited:
+    if (chk == True):
+        break
     for i in k:
         if(0 in i):
             print(-1)
