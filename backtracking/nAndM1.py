@@ -1,28 +1,27 @@
 # [Backtracking] N과 M(1) - 백준 15649
 import copy
-from collections import deque
 
 N, M = list(map(int,input().split()))
-visited_origin = [0] * (N+1)
+visited_origin = [False] * (N+1)
+
+arr = [0] * (M+1)
 
 
-def bt(num, depth, visited):
-    q = deque()
-
+def dfs(num, depth, visited):
     visited_copy = copy.deepcopy(visited)
-    visited_copy[num] = 1
+    if(depth!=1):
+        visited_copy[num] = True
 
-    for i in range(1,N+1):
-        if(i != num and visited_copy[i] == 0):
-            q.append(i)
+    if(depth < M+1):
+        for i in range(1,N+1):
+            if(visited_copy[i] == False): # 위에서 방문하지 않은 경우에는 depth를 늘리고 재귀
+                arr[depth] = i
+                dfs(i,depth+1,visited_copy)
+    else:
+        for i in range(1,M+1):
+            print(arr[i], end=' ')
+        print('')
 
-    while q:
-        nnum = q.popleft()
-        print(nnum, end=' ')
-        if(depth < M+1):
-            bt(nnum,depth+1, visited_copy)
-        else:
-            print("")
+dfs(1,1,visited_origin)
 
-bt(1, 1, visited_origin)
 
