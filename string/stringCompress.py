@@ -12,7 +12,7 @@ def solution(s):
 
     for i in range(1, half + 1):
         first_s = s[0:i]
-        for j in range(0,len(s),i):
+        # for j in range(0,len(s),i):
 
 
 
