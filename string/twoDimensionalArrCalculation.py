@@ -7,6 +7,8 @@ r,c,k = list(map(int,input().split()))
 r = r-1
 c = c-1
 
+
+
 arr = []
 
 for i in range(3):
@@ -51,7 +53,11 @@ def R():
             arr[i].append(num)
             arr[i].append(cnt)
 
+        while(len(arr[i]) > 100):
+            arr[i].pop()
+
         addZero(arr)
+
     return
 
 def changeRC(a):
@@ -98,6 +104,9 @@ def C():
             arr_temp[i].append(num)
             arr_temp[i].append(cnt)
 
+        while (len(arr_temp[i]) > 100):
+            arr_temp[i].pop()
+
         addZero(arr_temp)
         arr = changeRC(arr_temp)
 
@@ -105,22 +114,35 @@ def C():
 
 
 while 1:
-    if(arr[r][c] == k):
-        break
-
     y = (len(arr))
     x = (len(arr[0]))
 
-    if(time >= 100):
-        print(-1)
-        break
+    if(y<r+1 or x<c+1):
+        if (time > 100):
+            print(-1)
+            break
 
-    if(y>=x):
-        R()
-        time += 1
+        if (y >= x):
+            R()
+            time += 1
+        else:
+            C()
+            time += 1
+
     else:
-        C()
-        time += 1
+        if(arr[r][c] == k):
+            break
 
-if(time < 100):
+        if(time > 100):
+            print(-1)
+            break
+
+        if(y>=x):
+            R()
+            time += 1
+        else:
+            C()
+            time += 1
+
+if(time <= 100):
     print(time)
