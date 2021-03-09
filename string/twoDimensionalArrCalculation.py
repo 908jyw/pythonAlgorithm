@@ -12,8 +12,6 @@ arr = []
 for i in range(3):
     arr.append(list(map(int,input().split())))
 
-print(arr)
-
 y = (len(arr))
 x = (len(arr[0]))
 time = 0
@@ -29,20 +27,20 @@ def addZero(a):
         while(len(a[i]) < max):
             a[i].append(0)
 
-
-
 def R():
     for i in range(len(arr)):
         hq = []
         arr_temp = sorted(arr[i])
         initial = arr_temp[0]
         count = 0
-        print('arr_temp = ', arr_temp)
         for j in range(len(arr_temp)):
-            if(initial == arr_temp[j] and arr_temp[j] != 0):
+            if(arr_temp[j] == 0):
+                continue
+            if(initial == arr_temp[j]):
                 count += 1
             else:
-                heapq.heappush(hq,[count,initial])
+                if(initial != 0):
+                    heapq.heappush(hq,[count,initial])
                 initial = arr_temp[j]
                 count = 1
             if(j == len(arr_temp)-1):
@@ -52,9 +50,6 @@ def R():
             cnt, num = heapq.heappop(hq)
             arr[i].append(num)
             arr[i].append(cnt)
-            print(cnt,num)
-
-        print('before add =' , arr)
 
         addZero(arr)
     return
@@ -79,22 +74,24 @@ def C():
         for j in range(len(arr[i])):
             arr_temp[j][i] = arr[i][j]
 
+
     for i in range(len(arr_temp)):
         hq = []
-        arr_temp_temp = sorted(arr[i])
-        initial = arr_temp[0]
+        arr_temp_temp = sorted(arr_temp[i])
+        initial = arr_temp_temp[0]
         count = 0
         for j in range(len(arr_temp_temp)):
-
+            if (arr_temp_temp[j] == 0):
+                continue
             if (initial == arr_temp_temp[j]):
                 count += 1
             else:
-                heapq.heappush(hq, [count, initial])
+                if (initial != 0):
+                    heapq.heappush(hq, [count, initial])
                 initial = arr_temp_temp[j]
                 count = 1
             if(j == len(arr_temp_temp)-1):
                 heapq.heappush(hq,[count,initial])
-
         arr_temp[i] = []
         while hq:
             cnt, num = heapq.heappop(hq)
@@ -114,16 +111,16 @@ while 1:
     y = (len(arr))
     x = (len(arr[0]))
 
+    if(time >= 100):
+        print(-1)
+        break
+
     if(y>=x):
         R()
         time += 1
-        print('arr = ' , arr)
     else:
         C()
         time += 1
 
-
-
-
-
-print('time = ', time)
+if(time < 100):
+    print(time)
