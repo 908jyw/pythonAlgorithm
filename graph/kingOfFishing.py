@@ -23,7 +23,6 @@ result = 0
 
 # 사람이동하고 물고기 낚시
 def moveAndFishing(index):
-    global M
     for i in range(len(shark)):
         r,c,s,d,z = shark[i]
         if(r==0 or c==0):
@@ -32,7 +31,6 @@ def moveAndFishing(index):
             # shark[i] = [0,0,0,0,0]
 
             del shark[i]
-            M = M - 1
             return z
     return 0
 
