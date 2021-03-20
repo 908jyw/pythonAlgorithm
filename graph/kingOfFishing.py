@@ -24,12 +24,13 @@ result = 0
 # 사람이동하고 물고기 낚시
 def moveAndFishing(index):
     global M
-    for i in range(M):
+    for i in range(len(shark)):
         r,c,s,d,z = shark[i]
         if(r==0 or c==0):
             continue
         if(c == index):
             # shark[i] = [0,0,0,0,0]
+
             del shark[i]
             M = M - 1
             return z
@@ -37,7 +38,7 @@ def moveAndFishing(index):
 
 # 상어이동
 def moveShark():
-    for i in range(M):
+    for i in range(len(shark)):
         r, c, s, d, z = shark[i]
         s_copy = s
         while s > 0:
@@ -62,13 +63,13 @@ def moveShark():
 
     shark.sort()
     print('-상어이동-')
-    for i in range(M):
+    for i in range(len(shark)):
         print(shark[i])
     print('-상어이동끝-')
 
-    pr, pc, ps, pd, pz = shark[0]
-    pindex = 0
-    for i in range(1,M):
+    pr, pc, ps, pd, pz = shark[len(shark)-1]
+    pindex = len(shark)-1
+    for i in range(len(shark)-2,-1,-1):
         r, c, s, d, z = shark[i]
 
         if(pr == 0 or pc == 0):
@@ -76,17 +77,36 @@ def moveShark():
 
         if(pr == r and pc == c):
             if(pz >= z):
-                shark[i] = [0,0,0,0,0]
+                del shark[i]
+                # shark[i] = [0,0,0,0,0]
             else:
-                shark[pindex] = [0,0,0,0,0]
+                del shark[pindex]
+                # shark[pindex] = [0,0,0,0,0]
                 pindex = i
                 pr, pc, ps, pd, pz = r, c, s, d, z
         else:
             pindex = i
             pr, pc, ps, pd, pz = r, c, s, d, z
 
+    # for i in range(1,M):
+    #     r, c, s, d, z = shark[i]
+    #
+    #     if(pr == 0 or pc == 0):
+    #         continue
+    #
+    #     if(pr == r and pc == c):
+    #         if(pz >= z):
+    #             shark[i] = [0,0,0,0,0]
+    #         else:
+    #             shark[pindex] = [0,0,0,0,0]
+    #             pindex = i
+    #             pr, pc, ps, pd, pz = r, c, s, d, z
+    #     else:
+    #         pindex = i
+    #         pr, pc, ps, pd, pz = r, c, s, d, z
+
     print('-상어먹기-')
-    for i in range(M):
+    for i in range(len(shark)):
         print(shark[i])
     print('-상어먹기끝-')
 
@@ -96,11 +116,13 @@ else:
     for i in range(1, C+1):
         sum = moveAndFishing(i)
         print('--낚시 시작 i =',i)
-        for j in range(M):
+        for j in range(len(shark)):
             print(shark[j])
         print('-낚시 끝-')
         result = result + sum
         print('result =',result)
+        if(len(shark) == 0):
+            break
         moveShark()
 
     print(result)
