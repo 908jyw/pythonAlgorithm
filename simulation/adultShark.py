@@ -106,17 +106,23 @@ def sharkMove():
             if(ny<0 or ny>=N or nx<0 or nx>=N):
                 continue
 
+            # 일단 이동못하는 경우는? 내가 방문하려는 곳에 이미 흔적이 있으면 못가
+            if (visited_copy[ny][nx][0] != 0):
+                continue
 
             # 이동을 한곳에 나보다 큰 애가 있으면 그 큰 상어는 먹힌다
-            if (area[ny][nx] != 0 and area[ny][nx] > i and visited[ny][nx][1] != 0 and visited_copy[ny][nx][1] == 0):
+            if (area[ny][nx] != 0 and area[ny][nx] > i and visited_copy[ny][nx][0] == 0):
                 shark[area[ny][nx]][0] = 0
                 shark[area[ny][nx]][1] = 0
                 shark[area[ny][nx]][2] = 0
-                visited[ny][nx][0] = 0
-                visited[ny][nx][1] = 0
+                #visited[ny][nx][0] = 0
+                #visited[ny][nx][1] = 0
+
+
 
             # for 문을 돌았는데 다음으로 갈 공간이 없으면 내가 남긴 흔적 방향으로 가야됨
-            if(j==3 and visited[ny][nx][1] != 0):
+            # 따라서 for문의 끝인데, 다음 갈 공간이 내 흔적도 아니면
+            if(j==3 and visited_copy[ny][nx][1] != i):
                 for k in range(4):
                     nd = prior_d[i][d - 1][k]
                     ny = cy + dy[nd]
@@ -125,12 +131,7 @@ def sharkMove():
                     if (ny < 0 or ny >= N or nx < 0 or nx >= N):
                         continue
 
-                    if(visited[ny][nx][0] == i):
-                        #shark[area[ny][nx]][0] = 0
-                        #shark[area[ny][nx]][1] = 0
-                        #shark[area[ny][nx]][2] = 0
-                        #visited[ny][nx][0] = i
-                        #visited[ny][nx][1] = k
+                    if(visited_copy[ny][nx][0] == i):
                         break
 
             if(j != 3 and visited[ny][nx][0] != 0):
