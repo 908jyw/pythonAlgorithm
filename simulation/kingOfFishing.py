@@ -4,23 +4,31 @@ import copy
 R, C, M = list(map(int,input().split()))
 
 shark = []
-shark.append([0,0,0,0,0,])
+shark.append([0,0,0,0,0])
 for i in range(M):
     shark.append(list(map(int,input().split())))
 
-for i in range(M+1):
-    print(shark[i])
-
+# print("---")
+# for i in range(M+1):
+#     print(shark[i])
+# print("---")
 # area = []
 # for i in range(R+1):
 #     area.append([0,0]*(C+1))
 #
 area = [[[0,0] for _ in range(C+1)] for _ in range(R+1)]
+area_zero = [[[0,0] for _ in range(C+1)] for _ in range(R+1)]
 
-for i in range(R+1):
-    print(area[i])
+for i in range(M+1):
+    r, c, s, d, z = shark[i]
+    if(i != 0):
+        area[r][c][0] = i
+        area[r][c][1] = z
 
-print('***---***')
+
+
+# for i in range(R+1):
+#     print(area[i])
 
 # r,c,s,d,z
 # r,c 상어의 위치
@@ -41,26 +49,21 @@ def moveAndFishing(idx):
     maxSize = 0
     for i in range(M+1):
         r,c,s,d,z = shark[i]
+
         if(c>idx):
-            break
+            continue
         elif(c<idx):
             continue
         elif(c==idx):
             if(r <= minRow):
                 minRow = r
                 minRowIdx = i
-                # if(z > maxSize):
-                #     if(minRowIdx != M+1):
-                #         shark[minRowIdx] = [0,0,0,0,0]
-                #     minRowIdx = i
-                #     maxSize = z
-                # elif(z < maxSize):
-                #     shark[i] = [0,0,0,0,0]
 
-    print('낚시시작',idx)
-    for i in range(R + 1):
-        print(area[i])
-    print('낚시끝')
+
+    # print('낚시시작',idx)
+    # for i in range(R + 1):
+    #     print(area[i])
+    # print('낚시끝')
 
     if(minRowIdx == M+1):
         return 0
@@ -75,58 +78,73 @@ def moveAndFishing(idx):
 
 def moveShark():
     global area
-    area_copy = copy.deepcopy(area)
+    area_zero_copy = copy.deepcopy(area_zero)
 
     for i in range(M+1):
-        r, c, s, d, z = shark[i]
-        s_copy = s
-        if(r == 0):
+        cr, cc, cs, cd, cz = shark[i]
+        nr, nc, nd = cr, cc, cd
+
+        s_copy = cs
+        if(cr == 0):
             continue
-        while s > 0:
-            ny = r + dy[d]
-            nx = c + dy[d]
+        while cs > 0:
+            ny = nr + dy[nd]
+            nx = nc + dx[nd]
 
             if(ny < 1):
-                d = 2
+                nd = 2
                 continue
             elif(ny >= R+1):
-                d = 1
+                nd = 1
                 continue
             elif(nx < 1):
-                d = 3
+                nd = 3
                 continue
             elif(nx >= C+1):
-                d = 4
+                nd = 4
                 continue
-            r = ny
-            c = nx
-            s = s - 1
-        shark[i] = [r,c,s_copy,d,z]
+            nr = ny
+            nc = nx
+            cs = cs - 1
+        shark[i] = [nr,nc,s_copy,nd,cz]
 
-        if(area_copy[r][c][1] == 0):
-            area_copy[r][c][0] = i
-            area_copy[r][c][1] = z
-        elif(area_copy[r][c][1] != 0):
-            if(area_copy[r][c][1] > z):
+
+        if(area_zero_copy[nr][nc][1] == 0):
+
+            #area_zero_copy[cr][cc][0] = 0
+            #area_zero_copy[cr][cc][1] = 0
+            area_zero_copy[nr][nc][0] = i
+            area_zero_copy[nr][nc][1] = cz
+        elif(area_zero_copy[nr][nc][1] != 0):
+            if(area_zero_copy[nr][nc][1] > cz):
+
                 shark[i] = [0,0,0,0,0]
-            elif(area_copy[r][c][1] < z):
-                shark[area_copy[r][c][0]] = [0,0,0,0,0]
-                area_copy[r][c][0] = i
-                area_copy[r][c][1] = z
+                #area_zero_copy[cr][cc][0] = 0
+                #area_zero_copy[cr][cc][1] = 0
 
-    area = copy.deepcopy(area_copy)
-    print('먹기시작')
-    for i in range(R + 1):
-        print(area[i])
-    print('먹기끝')
+            elif(area_zero_copy[nr][nc][1] < cz):
+
+                shark[area_zero_copy[nr][nc][0]] = [0,0,0,0,0]
+                #area_zero_copy[cr][cc][0] = 0
+                #area_zero_copy[cr][cc][1] = 0
+                area_zero_copy[nr][nc][0] = i
+                area_zero_copy[nr][nc][1] = cz
+
+
+    area = copy.deepcopy(area_zero_copy)
+    # print('먹기시작')
+    # for i in range(R + 1):
+    #     print(area[i])
+    # print('먹기끝')
 
 
 
 
 for i in range(1,C+1):
+    if(M == 0):
+        break
     sum = moveAndFishing(i)
     result = result + sum
-    print(result)
     moveShark()
 
 print(result)
