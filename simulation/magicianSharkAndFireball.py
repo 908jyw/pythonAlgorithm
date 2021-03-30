@@ -4,7 +4,6 @@ import copy
 N, M, K = list(map(int,input().split()))
 
 fireBall = []
-fireBall.append([0,0,0,0,0])
 # r 행
 # c 열
 # m 질량
@@ -19,29 +18,24 @@ for i in range(M):
 
 area = [[0]*(N+1) for _ in range(N+1)]
 
-for i in range(M+1):
-    print(fireBall[i])
-
-print('---')
-
-for i in range(N+1):
-    print(area[i])
-
 
 
 def moveFireBall():
-    for i in range(M+1):
-        if(i==0):
-            continue
-        r,c,m,s,d = fireBall[i]
+    for i in range(len(fireBall)):
+        # if(i==0):
+        #     continue
+        cr,cc,m,s,d = fireBall[i]
+        ny,nx = cr,cc
         s_origin = s
 
         if(m==0):
             continue
 
         while s > 0:
-            ny = r + dy[d]
-            nx = c + dx[d]
+            ny = ny + dy[d]
+            nx = nx + dx[d]
+
+            # print(i,ny,nx)
 
             # 열만 마지막일때
             if(nx>N and 1<=ny<=N):
@@ -63,10 +57,104 @@ def moveFireBall():
             elif(nx<1 and ny<1):
                 nx = N
                 ny = N
+            # 열은 처음이고, 행은 마지막일때
+            elif(nx<1 and ny>N):
+                nx = N
+                ny = 1
+            # 열은 마지막이고, 행은 처음일때
+            elif (nx > N and ny < 1):
+                nx = 1
+                ny = N
+
+            s = s - 1
 
         fireBall[i] = [ny,nx,m,s_origin,d]
+
+    # print("이동")
+    # for i in range(len(fireBall)):
+    #     print(fireBall[i])
+    # print("이동끝")
+
+odd = [1,3,5,7]
+even = [0,2,4,6]
+
+def makeFireBall():
+    fireBall_copy = copy.deepcopy(fireBall)
+
+    fireBall_copy.sort()
+    fireBall_copy.append([0,0,0,0,0])
+    pr, pc, pm, ps, pd = 0,0,0,0,0
+    sum_m = 0
+    sum_s = 0
+    sum_odd = 0
+    sum_even = 0
+    count = 0
+
+    # print("fireBall_copy")
+    # for i in range(len(fireBall_copy)):
+    #     print(fireBall_copy[i])
+    # print("fireBall_copy 끝")
+
+    for i in range(len(fireBall_copy)):
+        r, c, m, s, d = fireBall_copy[i]
+        if(m==0 and i != len(fireBall_copy)-1):
+            continue
+        if(pr!=r or pc!=c):
+            if(count>1):
+                fireBall.remove([pr, pc, pm, ps, pd])
+                nm = sum_m // 5
+                ns = sum_s // count
+                if(nm > 0):
+                    if(sum_odd > 0 and sum_even > 0):
+                        fireBall.append([pr, pc, nm, ns, 1])
+                        fireBall.append([pr, pc, nm, ns, 3])
+                        fireBall.append([pr, pc, nm, ns, 5])
+                        fireBall.append([pr, pc, nm, ns, 7])
+                    else:
+                        fireBall.append([pr, pc, nm, ns, 0])
+                        fireBall.append([pr, pc, nm, ns, 2])
+                        fireBall.append([pr, pc, nm, ns, 4])
+                        fireBall.append([pr, pc, nm, ns, 6])
+            pr = r
+            pc = c
+            pm = m
+            ps = s
+            pd = d
+            sum_s = s
+            sum_m = m
+            count = 1
+            sum_odd = 0
+            sum_even = 0
+            if(d in odd):
+                sum_odd += 1
+            elif(d in even):
+                sum_even += 1
+        elif(pr==r and pc==c):
+            fireBall.remove([pr,pc,pm,ps,pd])
+            count += 1
+            sum_s += s
+            sum_m += m
+            if (d in odd):
+                sum_odd += 1
+            elif (d in even):
+                sum_even += 1
+            pr, pc, pm, ps, pd = r, c, m, s, d
+
+    # print("분리")
+    # for i in range(len(fireBall)):
+    #     print(fireBall[i])
+    # print("분리끝")
 
 
 
 for i in range(K):
+    # print('',i,'번째')
     moveFireBall()
+    makeFireBall()
+
+result = 0
+for i in range(len(fireBall)):
+    result += fireBall[i][2]
+
+
+print(result)
