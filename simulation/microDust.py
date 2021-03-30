@@ -1,4 +1,4 @@
-# [BFS,DFS] 미세먼지 안녕! - 백준 17144 삼성기출
+# [Simulation] 미세먼지 안녕! - 백준 17144 삼성기출
 
 import copy
 
@@ -31,7 +31,7 @@ def spread(y,x):
 def clean():
     global area_bck
 
-    for i in range(1,airClaener[0] - 1):
+    for i in range(1,airClaener[0]):
         area[i][0] = area_bck[i-1][0]
 
     for i in range(airClaener[1] + 1 ,R -1):
@@ -71,7 +71,7 @@ for t in range(T):
             if(t == 0 and area[i][j] == -1):
                 airClaener.append(i)
 
-
+    # print("airClaener =",airClaener)
     for i in range(R):
         for j in range(C):
             area[i][j] = area[i][j] + increase[i][j] - decrease[i][j]
@@ -80,7 +80,18 @@ for t in range(T):
     decrease = [[0] * C for _ in range(R)]
 
     area_bck = copy.deepcopy(area)
+
+    # print("확산 이후", t ,"초")
+    # for i in range(R):
+    #     print(area_bck[i])
+    # print("확산 끝")
+
     clean()
+
+    # print("청소 이후", t, "초")
+    # for i in range(R):
+    #     print(area[i])
+    # print("청소 끝")
 
 result = 0
 for i in range(R):
