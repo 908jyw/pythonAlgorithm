@@ -22,53 +22,25 @@ area = [[0]*(N+1) for _ in range(N+1)]
 
 def moveFireBall():
     for i in range(len(fireBall)):
-        # if(i==0):
-        #     continue
+
         cr,cc,m,s,d = fireBall[i]
-        ny,nx = cr,cc
-        s_origin = s
 
         if(m==0):
             continue
 
-        # while s > 0:
-        #     ny = ny + dy[d]
-        #     nx = nx + dx[d]
-        #
-        #     # print(i,ny,nx)
-        #
-        #     # 열만 마지막일때
-        #     if(nx>N and 1<=ny<=N):
-        #         nx = 1
-        #     # 행만 마지막일때
-        #     elif(ny>N and 1<=nx<=N):
-        #         ny = 1
-        #     # 열과 행 모두 마지막일때
-        #     elif(nx>N and ny>N):
-        #         nx=1
-        #         ny=1
-        #     # 열만 처음일때
-        #     elif(nx<1 and 1<=ny<=N):
-        #         nx = N
-        #     # 행만 처음일때
-        #     elif(ny<1 and 1<=nx<=N):
-        #         ny = N
-        #     # 열과 행 모두 처음일때
-        #     elif(nx<1 and ny<1):
-        #         nx = N
-        #         ny = N
-        #     # 열은 처음이고, 행은 마지막일때
-        #     elif(nx<1 and ny>N):
-        #         nx = N
-        #         ny = 1
-        #     # 열은 마지막이고, 행은 처음일때
-        #     elif (nx > N and ny < 1):
-        #         nx = 1
-        #         ny = N
-        #
-        #     s = s - 1
+        nr = cr + dy[d] * s
+        nc = cc + dx[d] * s
 
-        fireBall[i] = [ny,nx,m,s_origin,d]
+        if(1<=nr<=N and 1<=nc<=N):
+            fireBall[i] = [nr, nc, m, s, d]
+            continue
+        else:
+            if(nc>N): nc = nc % N
+            if(nr>N): nr = nr % N
+            if(nc<1): nc = N - (abs(nc) % N)
+            if(nr<1): nr = N - (abs(nr) % N)
+
+        fireBall[i] = [nr,nc,m,s,d]
 
     # print("이동")
     # for i in range(len(fireBall)):
