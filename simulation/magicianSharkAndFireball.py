@@ -42,6 +42,7 @@ def moveFireBall():
 
         fireBall[i] = [nr,nc,m,s,d]
 
+    fireBall.sort()
     # print("이동")
     # for i in range(len(fireBall)):
     #     print(fireBall[i])
@@ -53,7 +54,7 @@ even = [0,2,4,6]
 def makeFireBall():
     fireBall_copy = copy.deepcopy(fireBall)
 
-    fireBall_copy.sort()
+    #fireBall_copy.sort()
     fireBall_copy.append([0,0,0,0,0])
     pr, pc, pm, ps, pd = 0,0,0,0,0
     sum_m = 0
@@ -61,6 +62,9 @@ def makeFireBall():
     sum_odd = 0
     sum_even = 0
     count = 0
+
+    if(len(fireBall_copy) == 1):
+        return
 
     # print("fireBall_copy")
     # for i in range(len(fireBall_copy)):
