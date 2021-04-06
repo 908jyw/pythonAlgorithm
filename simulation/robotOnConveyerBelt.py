@@ -1,10 +1,13 @@
 # [Simulation] 컨베이어 벨트 위의 로봇 - 백준 20055 삼성기출
+import copy
+
 
 N, K = list(map(int,input().split()))
 
 
 # 내구도
 A = list(map(int,input().split()))
+
 
 
 # 로봇의 위치
@@ -14,7 +17,15 @@ print(len(robot))
 
 # 벨트가 회전한다.
 def lotation():
+
+    temp = copy.deepcopy(A)
+
     for i in range(len(A)):
+
+        nx = i + 1
+        if(nx >= 2*N):
+            nx = 0
+        A[nx] = temp[i]
 
     #
     # for i in range(len(robot)):
