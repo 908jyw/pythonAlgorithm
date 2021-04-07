@@ -97,24 +97,7 @@ while(finish_boolean == False):
     chkA()
     result += 1
     print('--------')
-#
-# lotation()
-# makeRobot()
-# chkA()
-# result += 1
-# print(finish_boolean)
-#
-# lotation()
-# makeRobot()
-# chkA()
-# result += 1
-# print(finish_boolean)
-#
-# lotation()
-# makeRobot()
-# chkA()
-# result += 1
-# print(finish_boolean)
+
 
 print(result - 1)
 
