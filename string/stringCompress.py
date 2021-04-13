@@ -26,6 +26,7 @@ def solution(s):
 
             if(end > len(s)):
                 print('count = ',count)
+                print('pre_s =', pre_s)
                 if(count>1):
                     new_s = new_s + str(count) + pre_s
                     if (len(new_s) < MIN):
