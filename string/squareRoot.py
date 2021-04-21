@@ -4,11 +4,15 @@
 import math
 def solution(n):
     answer = 0
-    print(n)
     answer = math.sqrt(n)
-    return answer
+    result = answer - int(answer)
+    if(result > 0):
+        return -1
+    else:
+        answer = (answer + 1) * (answer + 1)
+    return int(answer)
 
 
 N = 121
 
-solution(print(N))
+print(solution(N))
