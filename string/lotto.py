@@ -1,7 +1,13 @@
-# [String] 로또 - 프로그래머스 1단계
+# [String] 로또의 최고 순위와 최저 순위 - 프로그래머스 1단계
 
 def solution(lottos, win_nums):
     answer = []
+
+    cnt = 0
+    for i in win_nums:
+        if(i in lottos):
+            cnt += 1
+
     return answer
 
 
