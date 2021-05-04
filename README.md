@@ -1,2 +1,2 @@
 # pythonAlgorithm
-python algorithm study
+python algorithm studyy
