@@ -6,7 +6,6 @@ sys.setrecursionlimit(10**6)
 N, M = list(map(int,input().split()))
 
 graph = [[] * N for _ in range(N)]
-conn = []
 
 # print(graph)
 
