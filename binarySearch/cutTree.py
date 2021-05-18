@@ -8,28 +8,29 @@ tree = list(map(int,sys.stdin.readline().split()))
 
 tree.sort()
 
-# print(tree)
-
-
-
 def binarysearch(findNum):
 
     left = 0
-    right = len(tree) - 1
+    right = tree[len(tree)-1]
 
     while(left <= right):
         sum = 0
         mid = (left + right) // 2
-        for i in range(mid,right+1):
-            sum = sum + tree[i] - tree[mid]
+        for i in range(len(tree)):
+            if(tree[i] < mid):
+                continue
+            sum = sum + tree[i] - mid
+            if(sum > findNum):
+                result = mid
+                break
         if(sum > findNum):
             left = mid + 1
-            result_index = mid
         elif(sum < findNum):
             right = mid - 1
         else:
-            return tree[mid]
-    return tree[result_index]
+            return mid
+    return result
+
 
 
 print(binarysearch(M))
