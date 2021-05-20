@@ -1,22 +1,18 @@
-# 테스트 파이썬 파일
-
-# visited = [[[0] * 2 for _ in range(5)] for _ in range(5)]
-#
-# for i in range(5):
-#     print(visited[i])
 
 
 
-a = 0
-b = 10
-
-result = a % b
-
-print(result)
 
 
-print(5 % 2)
-print(-5 % -2)
-print(5 % -2)
-print(-5 %  2)
+import itertools
 
+num=[]
+
+num.append(list(map(''.join,itertools.permutations('1234', 4))))
+
+print(num)
+
+zzz = sum(num,[])
+print(zzz)
+print(zzz[0])
+
+answer = 0
