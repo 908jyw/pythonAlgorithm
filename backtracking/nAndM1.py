@@ -37,6 +37,7 @@ for i in range(1,N+1):
     num.append(str(i))
 
 result = list(map(' '.join,itertools.permutations(num,M)))
+print(result)
 for i in range(len(result)):
     print(result[i])
 
