@@ -5,12 +5,14 @@ sys.setrecursionlimit(10**6)
 N = int(input())
 
 graph = [[] for _ in range(N+1)]
+print(graph)
 
 for i in range(N-1):
     a, b = list(map(int,sys.stdin.readline().split()))
     graph[a].append(b)
     graph[b].append(a)
 
+print(graph)
 
 def dfs(n):
     global visited
