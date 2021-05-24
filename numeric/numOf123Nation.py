@@ -6,22 +6,36 @@ import itertools
 def solution(n):
     answer = ''
 
-    n = 39
+    #     x = 0
+    #     i = 0
+    #     while True:
+    #         x += 1
+    #         i += 1
+    #         x = 3 * x
+    #         if(n <= x):
+    #             break
 
-    x = 1
+    #     result = list(map(''.join,itertools.product('124',repeat=i)))
+
+    #     answer = result[n - (x//3 - 1) -1]
+
+    # n = 15
+
+    # if(0<n<4):
+    #     yn = False
+    # else:
+    #     yn = True
+
     while True:
-        sum = 1
-        for i in range(1, x + 1):
-            sum = sum * 3
-        if (n <= sum):
+        # print(n)
+        if (0 < n < 3):
+            answer = str(n % 3) + answer
             break
         else:
-            n = n - sum
-            x += 1
-
-    result = list(map(''.join, itertools.product('124', repeat=x)))
-
-    answer = result[n - 1]
+            answer = '124'[(n - 1) % 3] + answer
+            n = (n - 1) // 3
+            if (n == 0):
+                break
 
     print(answer)
 
