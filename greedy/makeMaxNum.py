@@ -8,6 +8,8 @@ def solution(number, k):
 
     n = len(number)
     leng = n - k
+    if (leng < 0):
+        return number
     index = 0
     pick = 0
     q = deque()
@@ -32,9 +34,15 @@ def solution(number, k):
                         q.append(temp)
                         q.append(number[i])
                         break
-
         if (k < i):
-            compare_num = q[i - k]
+
+            if (len(q) > i - k):
+                compare_num = q[i - k]
+            else:
+                if (n - i <= leng - len(q)):
+                    q.append(number[i])
+                    continue
+
             if (int(number[i]) > int(compare_num)):
                 while len(q) > i - k:
                     temp = q.pop()
@@ -49,6 +57,15 @@ def solution(number, k):
                         q.append(number[i])
                         break
 
-    print(q)
+    while q:
+        answer += q.popleft()
+
+    if (len(answer) > leng):
+        answer = answer[:leng]
 
     return answer
+
+number = "865471234"
+k = 3
+
+solution(number,k)
