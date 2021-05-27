@@ -20,6 +20,8 @@ friend = [[] for _ in range(N+1)]
 
 for i in range(M):
     a, b = list(map(int,input().split()))
+    if(a > N or b > N):
+        continue
     friend[a].append(b)
     friend[b].append(a)
 
@@ -32,15 +34,23 @@ def bfs(n):
     visited[n][n] = 1
     v = visited[n][n]
 
+    # print('n = ', n)
+
     for i in friend[n]:
-        q.append([i,v])
+        # print('i = ', i)
+        nv = v + 1
+        visited[n][i] = nv
+        q.append([i,nv])
 
     while q:
         cn, cv = q.popleft()
+
+        # print('cn,cv',cn,cv)
         for i in friend[cn]:
             if(visited[n][i] > 0):
                 continue
             nv = cv + 1
+            # print('i,nv',i,nv)
             visited[n][i] = nv
 
             q.append([i,nv])
