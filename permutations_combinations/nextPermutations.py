@@ -70,8 +70,6 @@ def dfs(num,depth,visited):
         if (YN == 'Y'):
             print('result = ', result)
             YN = 'N'
-        # print('11' , result)
-        # print('22',compare)
         if(result == compare):
             YN = 'Y'
 
