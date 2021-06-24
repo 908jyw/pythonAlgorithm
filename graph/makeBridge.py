@@ -84,5 +84,10 @@ for i in range(N):
             visited_water = [[0] * N for _ in range(N)]
 
 
+a = []
+a.sort(reverse=True)
+
+a.so
+
 
 print(min-1)
