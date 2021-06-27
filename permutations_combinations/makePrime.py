@@ -1,12 +1,30 @@
 # [COMBINATIONS] 소수 만들기 - 프로그래머스
 
+result = [] * 3
 
-import itertools
+def dfs(index,num,depth):
 
-a = ['1','2','3','4']
-# arr = itertools.combinations(a,3)
-arr = list(map(''.join, itertools.combinations(a,3)))
+    if(depth < 3):
+        for(depth < 3):
+            result[depth] = num
+        dfs()
 
-print(arr)
 
-print(arr[0])
+def solution(nums):
+    answer = -1
+
+    for i in range(nums):
+        
+        dfs(i,nums[i],0)
+
+
+
+
+    return answer
+
+
+
+nums = [1,2,7,6,4]
+
+
+solution(nums)
